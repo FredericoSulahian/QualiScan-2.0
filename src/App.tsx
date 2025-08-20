@@ -7501,7 +7501,7 @@ Generate steps now:`;
           let scenarios: GherkinScenario[] = [];
           let requirements: DocumentRequirement[] = [];
 
-          // Sempre usar Gemini para gerar cenários Gherkin
+          // Always use Gemini to generate Gherkin scenarios
 
           const apiKey = sessionStorage.getItem('GEMINI_API_KEY') || geminiApiKey;
           if (!apiKey) {
@@ -7513,8 +7513,8 @@ Generate steps now:`;
           try {
             geminiScenarios = await callGeminiGenerateGherkinScenarios(content, apiKey);
           } catch (err) {
-            console.error('Erro ao chamar Gemini:', err);
-            alert('Erro ao chamar Gemini para gerar cenários. Veja o console para detalhes.');
+            console.error('Error calling Gemini:', err);
+            alert('Error calling Gemini to generate scenarios. See the console for details.');
             throw err;
           }
           if (Array.isArray(geminiScenarios) && geminiScenarios.length > 0) {
@@ -7531,7 +7531,7 @@ Generate steps now:`;
               confidence: s.confidence || 90
             }));
 
-            // Também extrai os requisitos para a lista de requisitos
+            // Also extract requirements into the requirements list
             requirements = scenarios.map((scenario, idx) => ({
               id: `REQ-G-${i}-${idx}`,
               text: scenario.businessImpact || scenario.title,
@@ -7542,7 +7542,7 @@ Generate steps now:`;
               confidence: scenario.confidence || 90
             }));
           } else {
-            alert('Nenhum cenário Gherkin foi retornado pelo Gemini. Verifique o conteúdo do documento e a chave da API.');
+            alert('No Gherkin scenario was returned by Gemini. Check the document content and the API key.');
             throw new Error('Gemini did not return any Gherkin scenarios.');
           }
 
